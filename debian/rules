@@ -1,0 +1,50 @@
+#!/usr/bin/make -f
+
+ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
+	CFLAGS += -Wall -g -O0 -D_REENTRANT
+else
+	CFLAGS += -Wall -g -O2 -D_REENTRANT
+endif
+
+build: build-stamp
+build-stamp: 
+	dh_testdir
+
+	./configure \
+		--host=$(DEB_HOST_GNU_TYPE) \
+		--build=$(DEB_BUILD_GNU_TYPE) \
+		--prefix=/usr \
+		--enable-shared \
+		--enable-compat
+	$(MAKE) CC=$(DEB_HOST_GNU_TYPE)-gcc AR=$(DEB_HOST_GNU_TYPE)-ar
+
+	touch $@
+
+clean:
+	dh_testdir
+	dh_testroot
+	dh_clean
+
+	[ ! -f Makefile ] || $(MAKE) distclean
+	[ ! -f w32/Makefile ] || rm w32/Makefile
+
+binary: binary-arch binary-indep
+
+binary-arch: build 
+	dh_testdir
+	dh_testroot
+	dh_prep
+
+	make instroot=$(CURDIR)/debian/tmp install
+
+	dh_install
+	dh_makeshlibs
+	dh_strip
+	dh_fixperms
+	dh_compress
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_builddeb
+
+binary-indep: build

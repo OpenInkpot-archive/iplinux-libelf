@@ -1,0 +1,32 @@
+Source: libelf
+Section: core
+Priority: optional
+Maintainer: Mikhail Gusarov <dottedmag@dottedmag.net>
+Build-Depends: debhelper (>= 7)
+Standards-Version: 3.8.3
+
+Package: libelf0
+Architecture: any
+Priority: optional
+Depends: ${shlibs:Depends}
+Description: an ELF object file access library
+ The elf library provides routines to access, and manipulate, Elf object
+ files. It is still not complete, but is required for a number of programs,
+ such as Eli (a state of the art compiler generation system), and Elk (the
+ Extension Language Kit - an implementation of the Scheme programming
+ language.)
+
+Package: libelf-dev
+Architecture: any
+Section: libdevel
+Priority: optional
+Depends: libelf0 (= ${binary:Version})
+Description: an ELF object file access library: development files
+ The elf library provides routines to access, and manipulate, Elf object
+ files. It is still not complete, but is required for a number of programs,
+ such as Eli (a state of the art compiler generation system), and Elk (the
+ Extension Language Kit - an implementation of the Scheme programming
+ language.)
+ .
+ This development library is only needed if you intend to compile, or
+ write, your own programs with this library.
