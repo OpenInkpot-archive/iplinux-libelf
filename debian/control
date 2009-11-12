@@ -3,6 +3,7 @@ Section: core
 Priority: optional
 Maintainer: Mikhail Gusarov <dottedmag@dottedmag.net>
 Build-Depends: debhelper (>= 7)
+XCS-Cross-Host-Build-Depends: debhelper (>= 7)
 Standards-Version: 3.8.3
 
 Package: libelf0
